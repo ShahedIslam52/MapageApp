@@ -25,8 +25,9 @@ public class LoginTest<MobileElement> extends BaseClass {
 		}
 	}
 
-	@SuppressWarnings({ "unused", "unchecked" })
-	@Test
+	
+	
+	@Test(description= "Verify the login")
 	public void Test2() {
 		try {
 
@@ -56,6 +57,21 @@ public class LoginTest<MobileElement> extends BaseClass {
 			driver.findElement(By.xpath(
 					"//*[@text='ログイン' and ./parent::*[./parent::*[./parent::*[(./preceding-sibling::* | ./following-sibling::*)[@class='android.view.ViewGroup']]]]]"))
 					.click();
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	@Test(description= "Verify the forgot password")
+	public void Test3() {
+		try {
+
 		}
 
 		catch (Exception e) {
