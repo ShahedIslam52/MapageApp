@@ -1,0 +1,64 @@
+package tests;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.BeforeMethod;
+
+import com.google.gson.Gson;
+
+import pages.LoginData;
+
+public class TerstSuite extends BaseClass {
+	
+	@BeforeMethod
+	@org.testng.annotations.Test
+	public void TestOne() {
+		try {
+
+			for(int i=1; i<=4; i++)
+			{
+				driver.findElement(By.xpath("//*[@class='android.view.ViewGroup' and ./*[@text='次へ']]")).click();
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@SuppressWarnings("unused")
+	@org.testng.annotations.Test
+	public void LoginTest() {
+		try {
+
+			driver.findElement(By.xpath("//*[@text='ログイン']")).click();
+			
+			//Email & Password Fill
+			String filePath = "src/test/resources/Data/login.json";
+
+			Gson gson = new Gson();
+			String jsonStr = new String(Files.readAllBytes(Paths.get(filePath)));
+			LoginData LoginData = gson.fromJson(jsonStr, LoginData.class);
+			
+			String email = pages.LoginData.getEmail();
+			String password = pages.LoginData.getPassword();
+			
+			driver.findElement(By.xpath("//*[@text='mailaddress@xxxxxxxx.com']")).click();
+			driver.findElement(By.xpath("//*[@text='mailaddress@xxxxxxxx.com']")).sendKeys(email);
+			
+			driver.findElement(By.xpath("//*[@text='パスワードを入力する']")).click();
+			driver.findElement(By.xpath("//*[@text='パスワードを入力する']")).sendKeys(password);
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+}

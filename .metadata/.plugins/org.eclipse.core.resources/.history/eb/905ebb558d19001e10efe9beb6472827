@@ -1,0 +1,57 @@
+package tests;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.BeforeMethod;
+
+import com.google.gson.Gson;
+
+import pages.LoginData;
+
+public class TerstSuite extends BaseClass {
+	
+	@BeforeMethod
+	@org.testng.annotations.Test
+	public void TestOne() {
+		try {
+
+			for(int i=1; i<=4; i++)
+			{
+				driver.findElement(By.xpath("//*[@class='android.view.ViewGroup' and ./*[@text='次へ']]")).click();
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@org.testng.annotations.Test
+	public void LoginTest() {
+		try {
+
+			driver.findElement(By.xpath("//*[@text='ログイン']")).click();
+			
+			//Email & Password Fill
+			String filePath = "src/test/resources/Data/login.json";
+
+			Gson gson = new Gson();
+			String jsonStr = new String(Files.readAllBytes(Paths.get(filePath)));
+			LoginData RegistrationData = gson.fromJson(jsonStr, LoginData.class);
+			
+			String email = LoginData.getEmail();
+			String password = LoginData.getPassword();
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+}

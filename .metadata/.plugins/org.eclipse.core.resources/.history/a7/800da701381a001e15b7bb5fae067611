@@ -1,0 +1,77 @@
+package tests;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.List;
+
+import org.json.JSONObject;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class LoginTest<MobileElement> extends BaseClass {
+
+	@Test(enabled = false)
+	public void Test1() {
+		try {
+
+			for (int i = 1; i <= 4; i++) {
+				driver.findElement(By.xpath("//*[@class='android.view.ViewGroup' and ./*[@text='次へ']]")).click();
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings({ "unused", "unchecked" })
+	@Test
+	public void Test2() {
+		try {
+
+			driver.findElement(By.xpath("//*[@text='ログイン']")).click();
+
+			// Email & Password Fill
+			String filePath = "src/test/resources/Data/login.json";
+
+			BufferedReader reader = new BufferedReader(new FileReader(filePath));
+			StringBuilder jsonContent = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				jsonContent.append(line);
+			}
+			reader.close();
+
+			// Parse the JSON content
+			JSONObject jsonObject = new JSONObject(jsonContent.toString());
+
+			// Access the JSON data
+			String email = jsonObject.getString("email");
+			String password = jsonObject.getString("password");
+
+			driver.findElement(By.xpath("//*[@text='mailaddress@xxxxxxxx.com']")).sendKeys(email);
+			driver.findElement(By.xpath("//*[@text='パスワードを入力する']")).sendKeys(password);
+
+			driver.findElement(By.xpath(
+					"//*[@text='ログイン' and ./parent::*[./parent::*[./parent::*[(./preceding-sibling::* | ./following-sibling::*)[@class='android.view.ViewGroup']]]]]"))
+					.click();
+			
+			//MobileElement popupElement  = (MobileElement) driver.findElement(By.xpath("username_element_id"));
+			List<WebElement> elements = driver.findElements(By.className("android.view.ViewGroup"));
+			WebElement Element1 = elements.get(1);
+			String popupText = Element1.getText();
+	        String expectedMessage = "Invalid credentials";
+	        Assert.assertEquals(popupText, expectedMessage);
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+}

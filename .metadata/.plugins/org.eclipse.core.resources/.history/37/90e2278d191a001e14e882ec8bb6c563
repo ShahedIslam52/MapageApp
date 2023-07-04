@@ -1,0 +1,71 @@
+package tests;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.json.JSONObject;
+import org.openqa.selenium.By;
+import org.testng.annotations.Test;
+
+import com.google.gson.Gson;
+
+import pages.LoginData;
+
+public class TerstSuite extends BaseClass {
+	
+	@Test
+	public void TestOne() {
+		try {
+
+			for(int i=1; i<=4; i++)
+			{
+				driver.findElement(By.xpath("//*[@class='android.view.ViewGroup' and ./*[@text='次へ']]")).click();
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@SuppressWarnings("unused")
+	@Test
+	public void LoginTest() {
+		try {
+
+			driver.findElement(By.xpath("//*[@text='ログイン']")).click();
+			
+			//Email & Password Fill
+			String filePath = "src/test/resources/Data/login.json";
+
+			BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            StringBuilder jsonContent = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonContent.append(line);
+            }
+            reader.close();
+
+            // Parse the JSON content
+            JSONObject jsonObject = new JSONObject(jsonContent.toString());
+
+            // Access the JSON data
+            String email = jsonObject.getString("email");
+            String password = jsonObject.getString("password");
+			
+			driver.findElement(By.xpath("//*[@text='mailaddress@xxxxxxxx.com']")).sendKeys(email);
+			driver.findElement(By.xpath("//*[@text='パスワードを入力する']")).sendKeys(password);
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+}

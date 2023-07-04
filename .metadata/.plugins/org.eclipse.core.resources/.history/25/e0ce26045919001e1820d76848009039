@@ -1,0 +1,38 @@
+package tests;
+
+import org.openqa.selenium.By;
+
+public class TerstSuite extends BaseClass {
+	
+	@org.testng.annotations.Test
+	public void TestOne() {
+		try {
+
+			for(int i=1; i<=4; i++)
+			{
+				driver.findElement(By.xpath("//*[@class='android.view.ViewGroup' and ./*[@text='次へ']]")).click();
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	@org.testng.annotations.Test
+	public void LoginTest() {
+		try {
+
+			driver.findElement(By.xpath("//*[@class='android.widget.TextView' and ./*[@text='新規登録']]")).click();
+
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+}

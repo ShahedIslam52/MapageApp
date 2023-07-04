@@ -1,0 +1,58 @@
+package base;
+
+import java.net.URL;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+public class BaseClass {
+	AppiumDriver driver;
+
+	@BeforeSuite
+	public void setUp() {
+		try {
+
+			DesiredCapabilities dcp = new DesiredCapabilities();
+
+			String platform = "android";
+
+			if (platform.equalsIgnoreCase("android")) {
+				dcp.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
+				dcp.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.0");
+				dcp.setCapability(MobileCapabilityType.DEVICE_NAME, "SOG08"); //SOG08
+				dcp.setCapability(MobileCapabilityType.UDID, "HQ631810B9"); //HQ631810B9
+				dcp.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 2);
+				dcp.setCapability(MobileCapabilityType.NO_RESET, true);
+				
+
+				dcp.setCapability("appPackage", "com.mapage.net");
+				dcp.setCapability("appActivity", "com.mapage.net.MainActivity");
+
+				@SuppressWarnings("deprecation")
+				URL url = new URL("http://localhost:4723/wd/hub");
+				driver = new AppiumDriver(url, dcp);
+			}
+			
+			else
+			{
+				
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	@AfterSuite
+	public void tearDown() {
+		driver.close();
+		driver.quit();
+	}
+}

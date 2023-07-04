@@ -1,0 +1,42 @@
+package tests;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class TerstSuite extends BaseClass
+{
+	@SuppressWarnings("unchecked")
+	@org.testng.annotations.Test
+	public void TestOne()
+	{
+		try
+		{
+			final Object lock = new Object();
+			//for(int i=1; i<=4; i++)
+			//{
+			synchronized (lock) {
+			    // Perform some operations
+
+			    // Call wait() within the synchronized block
+			    lock.wait();
+			    driver.findElement(By.xpath("//*[@class='android.view.ViewGroup' and ./*[@text='次へ']]")).click();
+
+			    // After wait() returns, perform further operations
+			}
+
+				//((Wait<WebDriver>) driver).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@class='android.view.ViewGroup' and ./*[@text='次へ']]")));
+		        
+
+			//}
+		}
+		
+		catch (Exception e) {
+			System.out.println("Cause is: " + e.getCause());
+			System.out.println("Problem is: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+}
